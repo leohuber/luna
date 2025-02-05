@@ -1,0 +1,15 @@
+{
+    "configurations": [
+        {
+            "type": "debugpy",
+            "request": "launch",
+            "name": "Launch Luna Chat",
+            "program": "${workspaceFolder}/luna_chat/__main__.py",
+            "env": {
+                "ENV": "development"
+            },
+            "console": "integratedTerminal",
+            "preLaunchTask": "uv sync"
+        }
+    ]
+}
