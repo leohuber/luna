@@ -10,25 +10,24 @@ def test_journal_metadata_valid():
     jm = JournalMetadata(json_path)
 
     # Check the location address data.
-    address = jm.location_address
-    assert address["state"] == "Florida"
-    assert address["street"] == "6802 Gulf Drs"
-    assert address["zip_code"] == "34217"
-    assert address["city"] == "Anna Maria Island"
-    assert address["region"] == "United States"
+    assert jm.get_state() == "Florida"
+    assert jm.get_street() == "6802 Gulf Drs"
+    assert jm.get_zip_code() == "34217"
+    assert jm.get_city() == "Anna Maria Island"
+    assert jm.get_region() == "United States"
 
     expected_address_line = "6802 Gulf Drs, 34217, Anna Maria Island, Florida, United States"
-    assert jm.address_line == expected_address_line
+    assert jm.get_address_line() == expected_address_line
 
     # Validate date formatting.
     # The datetime string "2025-03-05T10:28:52+01:00" should yield short_date "250305-1028".
-    assert jm.short_date == "250305-1028"
+    assert jm.get_short_date() == "250305-1028"
 
     # Verify that the google maps link is set.
-    assert "google.com/maps/search" in jm.google_maps_link
+    assert "google.com/maps/search" in jm.get_google_maps_link()
 
     # For location_gps, note that the JSON uses key "lattitude" while the code expects "latitude"
     # Therefore, latitude will default to 0.
-    assert jm.lat == 27.514386217778767
-    assert jm.lon == -82.7227514245628554
-    assert jm.alt == 10
+    assert jm.get_lat() == 27.514386217778767
+    assert jm.get_lon() == -82.7227514245628554
+    assert jm.get_alt() == 10
