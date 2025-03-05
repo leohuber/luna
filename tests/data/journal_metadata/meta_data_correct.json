@@ -1,0 +1,21 @@
+{
+    "location_address": {
+        "state": "Florida",
+        "street": "6802 Gulf Drs",
+        "zip_code": "34217",
+        "city": "Anna Maria Island",
+        "region": "United States"
+    },
+    "datetime": "2025-03-05T10:28:52+01:00",
+    "location_gps": {
+        "lattitude": 27.514386217778767,
+        "longitude": -82.7227514245628554,
+        "altitude": 10
+    },
+    "device_info": {
+        "device_name": "Mac",
+        "os": "macOS",
+        "system_version": "15.3.1",
+        "device_type": "Mac"
+    }
+}

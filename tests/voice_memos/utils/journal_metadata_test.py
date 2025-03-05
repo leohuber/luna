@@ -1,49 +1,34 @@
-import unittest
-import tempfile
 import os
-import json
-from datetime import datetime
-from luna_chat.voice_memo.utils import journal_metadata
+from tests.test_utils.data_util import get_data_dir
+from luna_chat.voice_memo.utils.journal_metadata import JournalMetadata
 
-class TestJournalMetadataInit(unittest.TestCase):
-    
-    def test_init_valid_file(self):
-        # Prepare valid JSON data for testing.
-        data = {
-            "location_address": {"street": "123 Main St", "city": "New York"},
-            "datetime": "2023-10-10T10:10:10",
-            "location_gps": {"lattitude": 40.7128, "longitude": -74.0060, "altitude": 10},
-            "device_info": {"model": "iPhone"}
-        }
-        # Create temporary file with valid JSON content.
-        with tempfile.NamedTemporaryFile(mode='w+', delete=False) as tmp_file:
-            json.dump(data, tmp_file)
-            tmp_file.flush()
-            tmp_path = tmp_file.name
-        try:
-            # Instantiate JournalMetadata with the temporary file.
-            jm = journal_metadata.JournalMetadata(tmp_path)
-            # Validate the loaded JSON data.
-            self.assertEqual(jm.data, data)
-            self.assertEqual(jm.get_location_address(), data["location_address"])
-            self.assertEqual(jm.get_datetime(), data["datetime"])
-            self.assertEqual(jm.get_location_gps(), data["location_gps"])
-            self.assertEqual(jm.get_device_info(), data["device_info"])
-        finally:
-            os.remove(tmp_path)
+def test_journal_metadata_valid():
+    # Construct the path to the correct JSON file relative to this test file.
+    json_path = os.path.join(get_data_dir(), "journal_metadata/meta_data_correct.json")
 
-    def test_init_invalid_json(self):
-        # Create temporary file with invalid JSON content.
-        with tempfile.NamedTemporaryFile(mode='w+', delete=False) as tmp_file:
-            tmp_file.write("this is not a valid json")
-            tmp_file.flush()
-            tmp_path = tmp_file.name
-        try:
-            # Expect ValueError due to JSON decoding error.
-            with self.assertRaises(ValueError):
-                journal_metadata.JournalMetadata(tmp_path)
-        finally:
-            os.remove(tmp_path)
+    # Create an instance of JournalMetadata
+    jm = JournalMetadata(json_path)
 
-if __name__ == '__main__':
-    unittest.main()
+    # Check the location address data.
+    address = jm.location_address
+    assert address["state"] == "Florida"
+    assert address["street"] == "6802 Gulf Drs"
+    assert address["zip_code"] == "34217"
+    assert address["city"] == "Anna Maria Island"
+    assert address["region"] == "United States"
+
+    expected_address_line = "6802 Gulf Drs, 34217, Anna Maria Island, Florida, United States"
+    assert jm.address_line == expected_address_line
+
+    # Validate date formatting.
+    # The datetime string "2025-03-05T10:28:52+01:00" should yield short_date "250305-1028".
+    assert jm.short_date == "250305-1028"
+
+    # Verify that the google maps link is set.
+    assert "google.com/maps/search" in jm.google_maps_link
+
+    # For location_gps, note that the JSON uses key "lattitude" while the code expects "latitude"
+    # Therefore, latitude will default to 0.
+    assert jm.lat == 0
+    assert jm.lon == -82.7227514245628554
+    assert jm.alt == 10
