@@ -1,6 +1,6 @@
-# {{short_date}} - {{title}}
+# {{short_date}} - {{day_title}}
 
-## Journal Entry - {{time}}
+## {{entry_title}} - {{time}}
 
 | Attribute  | Value       |
 |------------|-------------|
@@ -9,4 +9,7 @@
 | GPS        | {{gps}}     |
 | Device     | {{device}}  |
 
-{{voice_memo}}
+{{voice_memo_text}}
+
+## Fotos
+
