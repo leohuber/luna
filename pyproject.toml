@@ -47,7 +47,8 @@ dev-dependencies = [
     "textual-dev>=1.7.0",
     "pyinstrument>=5.0.0",
     "ruff>=0.8.6",
-    "ipykernel>=6.29.5"
+    "ipykernel>=6.29.5",
+    "pytest>=8.3.5"
 ]
 
 [tool.mypy]
