@@ -4,6 +4,7 @@ import os
 from dotenv import load_dotenv
 from utils.journal_metadata import JournalMetadata
 from pathlib import Path
+from jinja2 import Environment, FileSystemLoader
 
 # Load environment variables from .env file
 load_dotenv()
@@ -13,35 +14,35 @@ openapi_key = os.getenv("OPENAI_API_KEY")
 client = OpenAI()
 
 # %%
-cloud_path = "/Users/leo/Library/Mobile Documents/com~apple~CloudDocs/"
-voice_memo_path = "VoiceMemo/Journal/"
-cloud_memo_path = os.path.join(cloud_path, voice_memo_path)
-luna_repo_path = "/Users/leo/Development/projects/luna_repo/"
-luna_repo_memo_path = os.path.join(luna_repo_path, voice_memo_path.lower())
+cloud_memo_path = Path("/Users/leo/Library/Mobile Documents/com~apple~CloudDocs/") / "VoiceMemo/Journal/"
+luna_repo_memo_path = Path("/Users/leo/Development/projects/luna_repo/") / "voicememo/journal/"
 
-# List all directories in the cloud path
-new_dirs = [d for d in os.listdir(cloud_memo_path) if os.path.isdir(os.path.join(cloud_memo_path, d))]
+# Set up Jinja2 environment once
+template_dir = Path(__file__).parent
+env = Environment(loader=FileSystemLoader(template_dir))
+template = env.get_template("journal_template.md.j2")
 
-# iterate through directories
-for new_dir in new_dirs:
-    rec_dir = Path(cloud_memo_path, new_dir, "rec")
-    memo_files = list(rec_dir.glob("*.json"))
-    memos = [m.stem for m in memo_files]
+# Iterate through each directory in the cloud memo path
+for dir_path in (p for p in cloud_memo_path.iterdir() if p.is_dir()):
+    rec_dir = dir_path / "rec"
+    memo_json_files = list(rec_dir.glob("*.json"))
+    memos = [js.stem for js in memo_json_files]
 
-    print(f"Memos in {new_dir}: {memos}")
+    last_transcription = None
+    last_metadata = None
 
+    entries = []
     for memo in memos:
         json_file = rec_dir / f"{memo}.json"
         metadata = JournalMetadata(json_file)
-        print(f"Address: {metadata.get_address_line()}")
-        print(f"Date: {metadata.get_short_date()}")
-        print(f"GPS: {metadata.get_gps_link()}")
-        print(f"Device: {metadata.get_device_info()}")
-
         m4a_file = rec_dir / f"{memo}.m4a"
-        print(f"Transcribing {m4a_file}")
-        with m4a_file.open('rb') as audio_file:
+        with m4a_file.open("rb") as audio_file:
             transcription = client.audio.transcriptions.create(model="whisper-1", file=audio_file)
-            print(transcription)
+        entries.append((metadata, transcription))
 
-# %%
+    # Render template with the metadata and transcription result
+    rendered_markdown = template.render(entries=entries)
+    markdown_file = dir_path / f"{dir_path.name}.md"
+    markdown_file.write_text(rendered_markdown, encoding="utf-8")
+
+    # %%

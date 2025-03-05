@@ -20,11 +20,12 @@ def test_journal_metadata_valid():
     assert jm.get_address_line() == expected_address_line
 
     # Validate date formatting.
-    # The datetime string "2025-03-05T10:28:52+01:00" should yield short_date "250305-1028".
-    assert jm.get_short_date() == "250305-1028"
+    assert jm.get_date() == "2025-03-05"
+    assert jm.get_short_datetime() == "2025-03-05 10:28"
+    assert jm.get_long_datetime() == "2025-03-05 10:28:52 UTC+01:00"
 
     # Verify that the google maps link is set.
-    assert "google.com/maps/search" in jm.get_google_maps_link()
+    assert "google.com/maps/search" in jm.get_address_link()
 
     # For location_gps, note that the JSON uses key "lattitude" while the code expects "latitude"
     # Therefore, latitude will default to 0.
