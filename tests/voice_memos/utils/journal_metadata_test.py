@@ -29,6 +29,6 @@ def test_journal_metadata_valid():
 
     # For location_gps, note that the JSON uses key "lattitude" while the code expects "latitude"
     # Therefore, latitude will default to 0.
-    assert jm.lat == 0
+    assert jm.lat == 27.514386217778767
     assert jm.lon == -82.7227514245628554
     assert jm.alt == 10

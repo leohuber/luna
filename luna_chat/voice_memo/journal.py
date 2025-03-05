@@ -4,6 +4,7 @@ import os
 import json
 from dotenv import load_dotenv
 from datetime import datetime
+from utils.journal_metadata import JournalMetadata
 
 # Load environment variables from .env file
 load_dotenv()
@@ -11,6 +12,8 @@ load_dotenv()
 # Print the environment variable OPENAPI_KEY and exit
 openapi_key = os.getenv("OPENAI_API_KEY")
 client = OpenAI()
+
+jm = JournalMetadata("")
 
 # %%
 cloud_path = "/Users/leo/Library/Mobile Documents/com~apple~CloudDocs/VoiceMemo/Journal/"
