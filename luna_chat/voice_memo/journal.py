@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from utils.journal_metadata import JournalMetadata
 from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
+from utils.audio_enhancer import improve_audio
 
 # Load environment variables from .env file
 load_dotenv()
@@ -37,7 +38,9 @@ for dir_path in (p for p in cloud_memo_path.iterdir() if p.is_dir()):
         json_file = rec_dir / f"{memo}.json"
         metadata = JournalMetadata(json_file)
         m4a_file = rec_dir / f"{memo}.m4a"
-        with m4a_file.open("rb") as audio_file:
+        mp3_file_enhanced = rec_dir / f"{memo}_enhanced.mp3"
+        improve_audio(m4a_file, mp3_file_enhanced)
+        with mp3_file_enhanced.open("rb") as audio_file:
             transcription = client.audio.transcriptions.create(model="whisper-1", file=audio_file)
         entries.append((metadata, transcription.text))
 
