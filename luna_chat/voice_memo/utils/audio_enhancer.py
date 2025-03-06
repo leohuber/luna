@@ -1,4 +1,5 @@
 from pathlib import Path
+from langchain.schema import output
 from pedalboard.io import AudioFile
 from pedalboard import NoiseGate, Compressor, LowShelfFilter, Gain, Pedalboard
 import noisereduce as nr
@@ -6,7 +7,9 @@ import noisereduce as nr
 # https://medium.com/@joshiprerak123/transform-your-audio-denoise-and-enhance-sound-quality-with-python-using-pedalboard-24da7c1df042
 
 
-def improve_audio(input_file: Path, output_file: Path):
+def improve_audio(input_file: Path) -> Path:
+
+    output_file = input_file.with_suffix(".enhanced.mp3")
 
     with AudioFile(str(input_file)) as f:
 
@@ -21,7 +24,7 @@ def improve_audio(input_file: Path, output_file: Path):
         ])
 
         # Open an audio file to write to:
-        with AudioFile(str(output_file), 'w', f.samplerate, f.num_channels) as o:
+        with AudioFile(str(output_file), 'w', f.samplerate, f.num_channels, quality=128) as o:
 
             # Read one second of audio at a time, until the file is empty:
             while f.tell() < f.frames:
@@ -35,3 +38,4 @@ def improve_audio(input_file: Path, output_file: Path):
 
                 # Write the output to our output file:
                 o.write(effected)
+    return output_file
