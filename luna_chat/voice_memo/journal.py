@@ -27,6 +27,7 @@ for dir_path in (p for p in cloud_memo_path.iterdir() if p.is_dir()):
     rec_dir = dir_path / "rec"
     memo_json_files = list(rec_dir.glob("*.json"))
     memos = [js.stem for js in memo_json_files]
+    memos.sort()
 
     last_transcription = None
     last_metadata = None
@@ -38,7 +39,7 @@ for dir_path in (p for p in cloud_memo_path.iterdir() if p.is_dir()):
         m4a_file = rec_dir / f"{memo}.m4a"
         with m4a_file.open("rb") as audio_file:
             transcription = client.audio.transcriptions.create(model="whisper-1", file=audio_file)
-        entries.append((metadata, transcription))
+        entries.append((metadata, transcription.text))
 
     # Render template with the metadata and transcription result
     rendered_markdown = template.render(entries=entries)
