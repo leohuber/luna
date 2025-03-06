@@ -43,7 +43,7 @@ line-length = 150
 [tool.uv]
 managed = true
 dev-dependencies = [
-    "mypy>=1.14.1",
+    "mypy>=1.15.0",
     "types-peewee>=3.16.0.0",
     "pre-commit>=4.0.1",
     "textual-dev>=1.7.0",

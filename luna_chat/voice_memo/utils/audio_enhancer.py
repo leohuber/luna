@@ -1,7 +1,6 @@
 from pathlib import Path
-from langchain.schema import output
-from pedalboard.io import AudioFile
-from pedalboard import NoiseGate, Compressor, LowShelfFilter, Gain, Pedalboard
+from pedalboard.io import AudioFile # type: ignore
+from pedalboard import NoiseGate, Compressor, LowShelfFilter, Gain, Pedalboard # type: ignore
 import noisereduce as nr
 
 # https://medium.com/@joshiprerak123/transform-your-audio-denoise-and-enhance-sound-quality-with-python-using-pedalboard-24da7c1df042

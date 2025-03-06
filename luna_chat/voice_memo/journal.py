@@ -1,4 +1,5 @@
 # %%
+from typing import Any
 from openai import OpenAI
 import os
 from dotenv import load_dotenv
@@ -30,8 +31,8 @@ for dir_path in (p for p in cloud_memo_path.iterdir() if p.is_dir()):
     memos = [js.stem for js in memo_json_files]
     memos.sort()
 
-    last_transcription = None
-    last_metadata = None
+    last_transcription: Any = None
+    last_metadata: JournalMetadata = None
 
     entries = []
     for memo in memos:
