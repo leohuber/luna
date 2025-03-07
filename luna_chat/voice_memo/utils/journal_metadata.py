@@ -1,18 +1,25 @@
+"""Provides functionality to extract and process metadate of voice memos.
+
+This module provides functionality to extract and process metadata from a JSON
+file containing journal entry details of voice memos. It focuses on handling various aspects of
+the metadata, including location information, datetime values, device information,
+and GPS coordinates.
+
+Note:
+    The module expects the input JSON file to have specific keys for each of the metadata
+    sections. If the JSON content is improperly formatted or missing, a ValueError is raised.
+
+"""
+
 import json
-from typing import Any
 from dataclasses import dataclass, field
 from datetime import datetime
-
-
-# Extract address information
-def get_non_empty_value(key: str, dictionary: dict, default="") -> Any:
-    value = dictionary.get(key, default)
-    return value if value else default
+from pathlib import Path
 
 
 @dataclass(init=False)
 class JournalMetadata:
-    __file_path: str
+    __file_path: Path = field(init=False)
     __data: dict = field(init=False)
     __location_address: dict = field(init=False)
     __datetime_str: str = field(init=False)
@@ -40,9 +47,10 @@ class JournalMetadata:
     __gps_line: str = field(init=False)
     __gps_link: str = field(init=False)
 
-    def __init__(self, file_path: str):
+    def __init__(self, file_path: Path) -> None:
+        """Initialize the object by loading and parsing a JSON file from file_path to extract and format metadata from a journal voice memo."""
         self.__file_path = file_path
-        with open(self.__file_path, "r") as file:
+        with file_path.open() as file:
             try:
                 self.__data = json.load(file)
             except json.JSONDecodeError as e:
@@ -53,14 +61,14 @@ class JournalMetadata:
             self.__datetime_str = self.__data.get("datetime", "")
             self.__location_gps = self.__data.get("location_gps", {})
             self.__device_info = self.__data.get("device_info", {})
-            self.__device_info_line = f"{self.__device_info.get("device_name", "")}, {self.__device_info.get("os", "")}, {self.__device_info.get("system_version", "")}, {self.__device_info.get("device_type", "")}"
+            self.__device_info_line = f"{self.__device_info.get('device_name', '')}, {self.__device_info.get('os', '')}, {self.__device_info.get('system_version', '')}, {self.__device_info.get('device_type', '')}"
 
             # Extract device info
             # In the constructor, extract each device_info property into its own private attribute.
-            self.__device_name = get_non_empty_value("device_name", self.__device_info, "")
-            self.__os = get_non_empty_value("os", self.__device_info, "")
-            self.__system_version = get_non_empty_value("system_version", self.__device_info, "")
-            self.__device_type = get_non_empty_value("device_type", self.__device_info, "")
+            self.__device_name = self.__device_info.get("device_name", "")
+            self.__os = self.__device_info.get("os", "")
+            self.__system_version = self.__device_info.get("system_version", "")
+            self.__device_type = self.__device_info.get("device_type", "")
 
             self.__street = self.__location_address.get("street", "")
             self.__zip_code = self.__location_address.get("zip_code", "")
@@ -133,9 +141,6 @@ class JournalMetadata:
 
     def get_address_line(self) -> str:
         return self.__address_line
-
-    def get_date_obj(self) -> datetime:
-        return self.__date_obj
 
     def get_date(self) -> str:
         return self.__date

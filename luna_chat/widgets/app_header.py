@@ -1,17 +1,17 @@
-from typing import TYPE_CHECKING, cast
 from importlib.metadata import version
+from typing import TYPE_CHECKING, cast
+
 from rich.markup import escape
+from rich.text import Text
 from textual.app import ComposeResult
 from textual.containers import Horizontal, Vertical
 from textual.signal import Signal
 from textual.widget import Widget
 from textual.widgets import Label
 
-from rich.text import Text
 from luna_chat.config import LunaChatModel
 from luna_chat.models import get_model
 from luna_chat.runtime_config import RuntimeConfig
-
 
 if TYPE_CHECKING:
     from luna_chat.app import Luna

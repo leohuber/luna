@@ -1,12 +1,13 @@
 # %%
-from typing import Any
-from openai import OpenAI
 import os
-from dotenv import load_dotenv
-from utils.journal_metadata import JournalMetadata
 from pathlib import Path
+from typing import Any
+
+from dotenv import load_dotenv
 from jinja2 import Environment, FileSystemLoader
+from openai import OpenAI
 from utils.audio_enhancer import improve_audio
+from utils.journal_metadata import JournalMetadata
 
 # Load environment variables from .env file
 load_dotenv()
@@ -21,7 +22,7 @@ luna_repo_memo_path = Path("/Users/leo/Development/projects/luna_repo/") / "voic
 
 # Set up Jinja2 environment once
 template_dir = Path(__file__).parent
-env = Environment(loader=FileSystemLoader(template_dir))
+env = Environment(loader=FileSystemLoader(template_dir), autoescape=True)
 template = env.get_template("journal_template.md.j2")
 
 # Iterate through each directory in the cloud memo path

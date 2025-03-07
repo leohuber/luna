@@ -15,5 +15,8 @@
     "python.analysis.autoSearchPaths": true,
     "python.analysis.diagnosticMode": "workspace",
     "mypy-type-checker.preferDaemon": true,
-    "mypy-type-checker.reportingScope": "workspace"
+    "mypy-type-checker.reportingScope": "workspace",
+    "ruff.configurationPreference": "filesystemFirst",
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "charliermarsh.ruff"
 }

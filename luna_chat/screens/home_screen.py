@@ -1,4 +1,5 @@
 from typing import TYPE_CHECKING, cast
+
 from textual import on
 from textual.app import ComposeResult
 from textual.binding import Binding
@@ -7,13 +8,13 @@ from textual.screen import Screen
 from textual.signal import Signal
 from textual.widgets import Footer
 
-from luna_chat.runtime_config import RuntimeConfig
-from luna_chat.widgets.chat_list import ChatList
-from luna_chat.widgets.prompt_input import PromptInput
 from luna_chat.chats_manager import ChatsManager
-from luna_chat.widgets.app_header import AppHeader
+from luna_chat.runtime_config import RuntimeConfig
 from luna_chat.screens.chat_screen import ChatScreen
+from luna_chat.widgets.app_header import AppHeader
+from luna_chat.widgets.chat_list import ChatList
 from luna_chat.widgets.chat_options import OptionsModal
+from luna_chat.widgets.prompt_input import PromptInput
 from luna_chat.widgets.welcome import Welcome
 
 if TYPE_CHECKING:
