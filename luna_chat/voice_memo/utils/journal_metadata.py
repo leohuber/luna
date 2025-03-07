@@ -91,80 +91,94 @@ class JournalMetadata:
             self.__gps_line = f"{self.__lat},{self.__lon},{self.__alt}"
             self.__gps_link = f"https://www.google.com/maps?q={self.__lat},{self.__lon}"
 
-    def get_file_path(self) -> str:
-        return self.__file_path
-
-    def get_data(self) -> dict:
-        return self.__data
-
-    def get_device_name(self) -> str:
+    @property
+    def device_name(self) -> str:
         return self.__device_name
 
-    def get_os(self) -> str:
+    @property
+    def os(self) -> str:
         return self.__os
 
-    def get_system_version(self) -> str:
+    @property
+    def system_version(self) -> str:
         return self.__system_version
 
-    def get_device_type(self) -> str:
+    @property
+    def device_type(self) -> str:
         return self.__device_type
 
-    def get_device_info_line(self) -> str:
+    @property
+    def device_info_line(self) -> str:
         return self.__device_info_line
 
-    def get_location_address(self) -> dict:
+    @property
+    def location_address(self) -> dict:
         return self.__location_address
 
-    def get_datetime_str(self) -> str:
+    @property
+    def datetime_str(self) -> str:
         return self.__datetime_str
 
-    def get_location_gps(self) -> dict:
+    @property
+    def location_gps(self) -> dict:
         return self.__location_gps
 
-    def get_device_info(self) -> dict:
-        return self.__device_info
-
-    def get_street(self) -> str:
+    @property
+    def street(self) -> str:
         return self.__street
 
-    def get_zip_code(self) -> str:
+    @property
+    def zip_code(self) -> str:
         return self.__zip_code
 
-    def get_city(self) -> str:
+    @property
+    def city(self) -> str:
         return self.__city
 
-    def get_state(self) -> str:
+    @property
+    def state(self) -> str:
         return self.__state
 
-    def get_region(self) -> str:
+    @property
+    def region(self) -> str:
         return self.__region
 
-    def get_address_line(self) -> str:
+    @property
+    def address_line(self) -> str:
         return self.__address_line
 
-    def get_date(self) -> str:
+    @property
+    def date(self) -> str:
         return self.__date
 
-    def get_short_datetime(self) -> str:
+    @property
+    def short_datetime(self) -> str:
         return self.__short_datetime
 
-    def get_long_datetime(self) -> str:
+    @property
+    def long_datetime(self) -> str:
         return self.__long_datetime
 
-    def get_address_link(self) -> str:
+    @property
+    def address_link(self) -> str:
         return self.__address_link
 
-    def get_lat(self) -> float:
+    @property
+    def lat(self) -> float:
         return self.__lat
 
-    def get_lon(self) -> float:
+    @property
+    def lon(self) -> float:
         return self.__lon
 
-    def get_alt(self) -> float:
+    @property
+    def alt(self) -> float:
         return self.__alt
 
-    def get_gps_line(self) -> str:
+    @property
+    def gps_line(self) -> str:
         return self.__gps_line
 
-    def get_gps_link(self) -> str:
+    @property
+    def gps_link(self) -> str:
         return self.__gps_link

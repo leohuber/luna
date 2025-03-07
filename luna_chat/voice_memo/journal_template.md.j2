@@ -1,15 +1,15 @@
-# {{entries[0][0].get_date()}}
+# {{entries[0][0].date}}
 
 {% for entry in entries%}
 
-## {{entry[0].get_short_datetime()}}
+## {{entry[0].short_datetime}}
 
 | Attribute  | Value       |
 |------------|-------------|
-| Date       | {{entry[0].get_long_datetime()}}    |
-| Address    | [{{entry[0].get_address_line()}}]({{entry[0].get_address_link()}}) |
-| GPS        | [{{entry[0].get_gps_line()}}]({{entry[0].get_gps_link()}})     |
-| Device     | {{entry[0].get_device_info_line()}}  |
+| Date       | {{entry[0].long_datetime}}    |
+| Address    | [{{entry[0].address_line}}]({{entry[0].address_link}}) |
+| GPS        | [{{entry[0].gps_line()}}]({{entry[0].gps_link}})     |
+| Device     | {{entry[0].device_info_line}}  |
 
 {{entry[1]}}
 

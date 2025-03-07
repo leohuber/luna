@@ -1,4 +1,5 @@
-import os
+from pathlib import Path
 
-def get_data_dir():
-    return os.path.join(os.path.dirname(__file__), "../data")
+
+def get_data_dir() -> Path:
+    return Path(__file__).parent / "../data"
