@@ -40,6 +40,10 @@ build-backend = "hatchling.build"
 [tool.ruff]
 line-length = 150
 
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = ["D"]
+
 [tool.uv]
 managed = true
 dev-dependencies = [
