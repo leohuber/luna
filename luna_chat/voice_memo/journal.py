@@ -1,7 +1,6 @@
 # %%
 import os
 from pathlib import Path
-from typing import Any
 
 from dotenv import load_dotenv
 from jinja2 import Environment, FileSystemLoader, Template
@@ -81,3 +80,5 @@ for dir_path in journal_dirs:
     generate_enhanced_audio(rec_dir, journal_entries)
     process_enhanced_audio(rec_dir, journal_entries)
     generate_markdown(dir_path, journal_entries, template, enforce=True)
+
+# %%
