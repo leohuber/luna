@@ -43,6 +43,9 @@ for dir_path in (p for p in cloud_memo_path.iterdir() if p.is_dir()):
         enhanced = improve_audio(m4a_file)
         with enhanced.open("rb") as audio_file:
             transcription = client.audio.transcriptions.create(model="whisper-1", file=audio_file)
+        transcription_file = rec_dir / f"{memo}.txt"
+        with transcription_file.open("w") as f:
+            f.write(transcription.text)
         entries.append((metadata, transcription.text))
 
     # Render template with the metadata and transcription result
