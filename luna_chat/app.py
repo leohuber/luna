@@ -9,8 +9,8 @@ from textual.binding import Binding
 from textual.signal import Signal
 
 from luna_chat.chats_manager import ChatsManager
+from luna_chat.config import LaunchConfig, LunaChatModel
 from luna_chat.models import ChatData, ChatMessage
-from luna_chat.config import LunaChatModel, LaunchConfig
 from luna_chat.runtime_config import RuntimeConfig
 from luna_chat.screens.chat_screen import ChatScreen
 from luna_chat.screens.help_screen import HelpScreen
@@ -18,8 +18,8 @@ from luna_chat.screens.home_screen import HomeScreen
 
 if TYPE_CHECKING:
     from litellm.types.completion import (
-        ChatCompletionUserMessageParam,
         ChatCompletionSystemMessageParam,
+        ChatCompletionUserMessageParam,
     )
 
 
@@ -58,7 +58,7 @@ class Luna(App[None]):
         self.theme = "textual-dark"
 
     async def launch_chat(self, prompt: str, model: LunaChatModel) -> None:
-        current_time = datetime.datetime.now(datetime.timezone.utc)
+        current_time = datetime.datetime.now(datetime.UTC)
         system_message: ChatCompletionSystemMessageParam = {
             "content": self.runtime_config.system_prompt,
             "role": "system",

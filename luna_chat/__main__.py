@@ -51,7 +51,7 @@ def cli() -> None:
     "-i",
     "--inline",
     is_flag=True,
-    help="Run in inline mode, without launching full TUI.",
+    help="Run in inline mode, without launching full GUI.",
     default=False,
 )
 def default(*, inline: bool) -> None:

@@ -1,4 +1,5 @@
 import os
+
 from pydantic import AnyHttpUrl, BaseModel, ConfigDict, Field, SecretStr
 
 
@@ -122,8 +123,7 @@ def get_builtin_google_models() -> list[LunaChatModel]:
             display_name="Gemini 1.5 Pro",
             provider="Google",
             product="Gemini",
-            description="Excels at reasoning tasks including code and text generation, "
-            "text editing, problem solving, data extraction and generation",
+            description="Excels at reasoning tasks including code and text generation, text editing, problem solving, data extraction and generation",
         ),
         LunaChatModel(
             id="luna-gemini/gemini-1.5-flash-latest",
