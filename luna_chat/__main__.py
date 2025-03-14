@@ -3,15 +3,15 @@ Luna CLI
 """
 
 import asyncio
-from textwrap import dedent
 import tomllib
+from textwrap import dedent
 from typing import Any
-from dotenv import load_dotenv
 
 import click
 from click_default_group import DefaultGroup
-
+from dotenv import load_dotenv
 from rich.console import Console
+
 from luna_chat.app import Luna
 from luna_chat.config import LaunchConfig
 from luna_chat.database.database import create_database, sqlite_file_name
@@ -54,10 +54,10 @@ def cli() -> None:
     help="Run in inline mode, without launching full TUI.",
     default=False,
 )
-def default(inline: bool) -> None:
+def default(*, inline: bool) -> None:
     create_db_if_not_exists()
 
-    launch_config = load_or_create_config_file()
+    launch_config: dict[str, Any] = load_or_create_config_file()
     app = Luna(LaunchConfig(**launch_config))
     app.run(inline=inline)
 
@@ -83,12 +83,12 @@ def reset() -> None:
 [b red]This will delete all messages and chats.[/]
 
 You may wish to create a backup of \
-"[bold blue u]{str(sqlite_file_name.resolve().absolute())}[/]" before continuing.
-            """
-                )
+"[bold blue u]{sqlite_file_name.resolve().absolute()!s}[/]" before continuing.
+            """,
+                ),
             ),
             pad=(1, 2),
-        )
+        ),
     )
     if click.confirm("Delete all chats?", abort=True):
         sqlite_file_name.unlink(missing_ok=True)

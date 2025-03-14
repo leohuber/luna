@@ -1,6 +1,10 @@
+"""This module provides functions to manage the application's data and configuration directories."""
+
 from pathlib import Path
 
-from xdg_base_dirs import xdg_config_home, xdg_data_home
+# The application data and config directories are stored in the user's home directory.
+__data_home: Path = Path.home() / ".local" / "share"
+__config_home: Path = Path.home() / ".config"
 
 
 def _luna_directory(root: Path) -> Path:
@@ -11,12 +15,12 @@ def _luna_directory(root: Path) -> Path:
 
 def data_directory() -> Path:
     """Return (possibly creating) the application data directory."""
-    return _luna_directory(xdg_data_home())
+    return _luna_directory(__data_home)
 
 
 def config_directory() -> Path:
     """Return (possibly creating) the application config directory."""
-    return _luna_directory(xdg_config_home())
+    return _luna_directory(__config_home)
 
 
 def config_file() -> Path:
