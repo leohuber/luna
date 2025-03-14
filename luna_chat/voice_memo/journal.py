@@ -35,7 +35,7 @@ def get_journal_template() -> Template:
     return env.get_template("journal_template.md.j2")
 
 
-def generate_enhanced_audio(rec_dir: Path, journal_entires: list[str], *, enforce: bool = False) -> None:
+def enhance_voice_memo(rec_dir: Path, journal_entires: list[str], *, enforce: bool = False) -> None:
     for memo in journal_entires:
         m4a_file = rec_dir / f"{memo}.m4a"
         enhanced = rec_dir / f"{memo}.enhanced.mp3"
@@ -43,7 +43,7 @@ def generate_enhanced_audio(rec_dir: Path, journal_entires: list[str], *, enforc
             improve_audio(m4a_file)
 
 
-def process_enhanced_audio(rec_dir: Path, journal_entires: list[str], *, enforce: bool = False) -> None:
+def transcribe_enhanced_audio(rec_dir: Path, journal_entires: list[str], *, enforce: bool = False) -> None:
     for memo in journal_entires:
         enhanced = rec_dir / f"{memo}.enhanced.mp3"
         transcription_file = rec_dir / f"{memo}.txt"
@@ -77,9 +77,9 @@ template = get_journal_template()
 for dir_path in journal_dirs:
     rec_dir = dir_path / "rec"
     journal_entries = get_journal_entries(rec_dir)
-    generate_enhanced_audio(rec_dir, journal_entries)
-    process_enhanced_audio(rec_dir, journal_entries, enforce=True)
-    generate_markdown(dir_path, journal_entries, template)
+    enhance_voice_memo(rec_dir, journal_entries)
+    transcribe_enhanced_audio(rec_dir, journal_entries)
+    generate_markdown(dir_path, journal_entries, template, enforce=True)
 
 # %%
 
